@@ -53,3 +53,41 @@ def list_requirements():
     rows = cursor.fetchall()
     conn.close()
     return {"code": 200, "data": [dict(row) for row in rows]}
+
+# ==========================================
+# 商业功能：将需求表单数据导出为 Excel (带 BOM 头的 CSV)
+# ==========================================
+@app.get("/api/requirements/export")
+def export_requirements_csv():
+    import csv, io, sqlite3, os
+    from fastapi.responses import StreamingResponse
+    
+    # 动态定位数据库绝对路径，防止终端启动位置不同导致找不到库
+    base_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+    db_path = os.path.join(base_dir, "editform.db")
+    
+    conn = sqlite3.connect(db_path)
+    conn.row_factory = sqlite3.Row
+    cursor = conn.cursor()
+    try:
+        cursor.execute("SELECT * FROM requirements")
+        rows = cursor.fetchall()
+    except Exception as e:
+        return {"error": "无法读取数据，可能表还未创建: " + str(e)}
+    finally:
+        conn.close()
+        
+    stream = io.StringIO()
+    stream.write('\ufeff') # 核心知识点：主动写入 BOM 头，Excel 打开绝对不乱码！
+    writer = csv.writer(stream)
+    
+    if rows:
+        writer.writerow(rows[0].keys()) # 写入表头 (列名)
+        for row in rows:
+            writer.writerow(row)        # 写入真实数据
+    else:
+        writer.writerow(["目前暂无客户提交需求"])
+        
+    response = StreamingResponse(iter([stream.getvalue()]), media_type="text/csv")
+    response.headers["Content-Disposition"] = "attachment; filename=requirements_export.csv"
+    return response
