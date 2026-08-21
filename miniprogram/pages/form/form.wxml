@@ -1,0 +1,47 @@
+<view style="padding: 30rpx;">
+  <view style="display:flex; justify-content:space-between; align-items:center; margin-bottom:20rpx;">
+    <text style="font-size:36rpx; font-weight:bold; color:#1a1a1a;">🎬 剪辑需求提交单</text>
+    <navigator url="/pages/admin/admin" style="font-size:24rpx; color:#07c160; background:#e8f7ee; padding:6rpx 16rpx; border-radius:20rpx;">后台看板 ➔</navigator>
+  </view>
+
+  <view style="background:#fff; padding:30rpx; border-radius:16rpx; box-shadow:0 4rpx 16rpx rgba(0,0,0,0.05);">
+    <view style="margin-bottom:20rpx;">
+      <text style="font-size:28rpx; color:#333; display:block; margin-bottom:10rpx;">称呼 / 团队名 *</text>
+      <input style="background:#f8f9fa; border:1rpx solid #e2e8f0; border-radius:8rpx; height:80rpx; padding:0 20rpx; font-size:28rpx;" placeholder="例如：张导 / 厦门某团队" data-field="clientName" bindinput="onInput" value="{{clientName}}" />
+    </view>
+
+    <view style="margin-bottom:20rpx;">
+      <text style="font-size:28rpx; color:#333; display:block; margin-bottom:10rpx;">手机 / 微信号 *</text>
+      <input style="background:#f8f9fa; border:1rpx solid #e2e8f0; border-radius:8rpx; height:80rpx; padding:0 20rpx; font-size:28rpx;" placeholder="用于沟通样片与方案" data-field="contactInfo" bindinput="onInput" value="{{contactInfo}}" />
+    </view>
+
+    <view style="margin-bottom:20rpx;">
+      <text style="font-size:28rpx; color:#333; display:block; margin-bottom:10rpx;">需求类型</text>
+      <picker bindchange="onTypeChange" value="{{typeIndex}}" range="{{videoTypes}}">
+        <view style="background:#f8f9fa; border:1rpx solid #e2e8f0; border-radius:8rpx; height:80rpx; line-height:80rpx; padding:0 20rpx; font-size:28rpx;">{{videoTypes[typeIndex]}} ▾</view>
+      </picker>
+    </view>
+
+    <view style="margin-bottom:20rpx;">
+      <text style="font-size:28rpx; color:#333; display:block; margin-bottom:10rpx;">成片期望时长</text>
+      <input style="background:#f8f9fa; border:1rpx solid #e2e8f0; border-radius:8rpx; height:80rpx; padding:0 20rpx; font-size:28rpx;" placeholder="例如：每集 1-2 分钟，共 10 集" data-field="duration" bindinput="onInput" value="{{duration}}" />
+    </view>
+
+    <view style="margin-bottom:20rpx;">
+      <text style="font-size:28rpx; color:#333; display:block; margin-bottom:10rpx;">预估预算 (元)</text>
+      <input style="background:#f8f9fa; border:1rpx solid #e2e8f0; border-radius:8rpx; height:80rpx; padding:0 20rpx; font-size:28rpx;" placeholder="例如：500-1500 / 剧集" data-field="budget" bindinput="onInput" value="{{budget}}" />
+    </view>
+
+    <view style="margin-bottom:20rpx;">
+      <text style="font-size:28rpx; color:#333; display:block; margin-bottom:10rpx;">素材网盘链接</text>
+      <input style="background:#f8f9fa; border:1rpx solid #e2e8f0; border-radius:8rpx; height:80rpx; padding:0 20rpx; font-size:28rpx;" placeholder="百度网盘 / 夸克 / 阿里云盘" data-field="materialUrl" bindinput="onInput" value="{{materialUrl}}" />
+    </view>
+
+    <view style="margin-bottom:20rpx;">
+      <text style="font-size:28rpx; color:#333; display:block; margin-bottom:10rpx;">特殊备注</text>
+      <textarea style="background:#f8f9fa; border:1rpx solid #e2e8f0; border-radius:8rpx; width:100%; box-sizing:border-box; padding:20rpx; font-size:28rpx; height:140rpx;" placeholder="例如：达芬奇色彩风格、交付格式要求等" data-field="notes" bindinput="onInput" value="{{notes}}" />
+    </view>
+
+    <button style="background-color:#07C160; color:#fff; font-weight:600; font-size:32rpx; border-radius:40rpx; margin-top:30rpx;" loading="{{submitting}}" bindtap="submitForm">提交剪辑需求</button>
+  </view>
+</view>

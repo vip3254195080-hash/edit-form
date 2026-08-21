@@ -1,0 +1,18 @@
+<view style="padding: 30rpx;">
+  <view style="margin-bottom: 24rpx;">
+    <text style="font-size:36rpx; font-weight:bold; color:#1a1a1a; display:block;">📊 剪辑需求管理看板</text>
+    <text style="font-size:24rpx; color:#888; display:block; margin-top:8rpx;">共收到 {{list.length}} 条需求</text>
+  </view>
+
+  <view wx:for="{{list}}" wx:key="id" style="background:#fff; border-radius:16rpx; padding:24rpx; margin-bottom:20rpx; box-shadow:0 4rpx 16rpx rgba(0,0,0,0.05);">
+    <view style="display:flex; justify-content:space-between; margin-bottom:12rpx; border-bottom:1rpx solid #f0f0f0; padding-bottom:12rpx;">
+      <text style="font-weight:bold; font-size:30rpx;">{{item.client_name}}</text>
+      <text style="color:#07c160; font-size:24rpx;">{{item.video_type}}</text>
+    </view>
+    <view style="font-size:26rpx; color:#555; margin-bottom:8rpx;">联系方式：<text style="color:#1989fa;" bindtap="copyText" data-text="{{item.contact_info}}">{{item.contact_info}} 📋</text></view>
+    <view style="font-size:26rpx; color:#555; margin-bottom:8rpx;">预算：<text style="color:#e54d42; font-weight:bold;">¥{{item.budget}}</text></view>
+    <view wx:if="{{item.material_url}}" style="font-size:26rpx; color:#555; margin-bottom:8rpx;">素材：<text style="color:#1989fa;" bindtap="copyText" data-text="{{item.material_url}}">复制网盘链接 📋</text></view>
+    <view wx:if="{{item.notes}}" style="font-size:24rpx; color:#666; background:#f9fafb; padding:12rpx; border-radius:8rpx; margin-top:10rpx;">备注：{{item.notes}}</view>
+    <view style="font-size:22rpx; color:#aaa; margin-top:12rpx; text-align:right;">{{item.created_at}}</view>
+  </view>
+</view>
